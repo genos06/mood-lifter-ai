@@ -1,0 +1,87 @@
+{% include "header.html" %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const usermsg = document.getElementById("usermsg");
+        const submit_btn = document.getElementById("submit");
+        if (usermsg) {
+            usermsg.addEventListener("keydown", function(event) {
+                // Check if the key is Enter without the Shift key being pressed
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault(); // Prevents new line creation
+                    submit_btn.click()
+                }
+            });
+        }
+        submit_btn.focus()
+    });
+    </script>
+
+<section>
+    <div class="container py-5">
+
+<div style="margin-top: 5rem;">    
+    <ul class="list-unstyled">
+        {% for msg in history %}
+        
+        {% if msg.role == "model" %}
+        <li class="d-flex justify-content-between mb-4">
+            <img src="static\assets\img\baymax.jpg" alt="avatar"
+            class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+            <div class="card w-100">
+                <div class="card-header d-flex justify-content-between p-3">
+                    <p class="fw-bold mb-0">Baymax</p>
+                    <p class="text-muted small mb-0">
+                        <!-- <i class="far fa-clock"></i> -->
+                     </p>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">
+                        {{msg.parts[0].text}}
+                        
+                    </p>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+
+        {% if msg.role == "user" %}
+        <li class="d-flex justify-content-between mb-4">
+            <div class="card w-100">
+                <div class="card-header d-flex justify-content-between p-3">
+                    <p class="fw-bold mb-0">{{current_user.name}}</p>
+                    <p class="text-muted small mb-0">
+                        <!-- <i class="far fa-clock"></i> -->
+                    </p>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">
+                        {{msg.parts[0].text}}
+                    </p>
+                </div>
+              </div>
+              <img src="static\assets\img\04.png" alt="avatar"
+              class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+            </li>
+        {% endif %}
+            {% endfor %}
+
+            <form method="post">
+            <li class="bg-white mb-3">
+                    <div data-mdb-input-init class="form-outline">
+                        <textarea id="usermsg"class="form-control bg-body-tertiary"  rows="4" name="msg"></textarea>
+                        <label class="form-label" for="textAreaExample2">Message</label>
+                    </div>
+                </li>
+                <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-rounded float-end" id="submit">Send</button>
+            </form>
+        </ul>
+        
+    </div>
+    
+</div>
+
+</section>
+
+
+{% include "footer.html" %}
