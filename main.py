@@ -67,7 +67,6 @@ model = genai.GenerativeModel("gemini-1.5-flash", safety_settings=[
 #sqlite engine
 # engine = create_engine("sqlite:///static/data/database/data.db", echo=True)  
 URL = os.getenv('POSTGRES_URL').replace('postgres://', 'postgresql://')
-print(URL)
 engine = create_engine(url=URL, echo=True)
 
 
